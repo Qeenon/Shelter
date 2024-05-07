@@ -40,7 +40,7 @@ namespace {
     };
 }
 
-const std::vector<std::shared_ptr<Repository>>
+[[nodiscard]] const std::vector<std::shared_ptr<Repository>>
 parse_config(const YAML::Node& config) {
   std::vector<std::shared_ptr<Repository>> result;
   result.reserve(config.size());

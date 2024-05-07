@@ -19,7 +19,7 @@ struct show_command {
     );
   }
 
-  void
+  [[noreturn]] void
   do_command(const lyra::group & g) {
     if (show_help) {
       std::cout << g;
@@ -85,6 +85,6 @@ struct show_command {
         }
       }
     }
-    exit(0);
+    exit(EXIT_SUCCESS);
   }
 };

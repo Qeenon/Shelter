@@ -5,7 +5,7 @@ include(ExternalProject)
 
 project (shelter)
 
-set(VERSION 2.0.11)
+set(VERSION 2.0.12)
 
 option(USE_LTO "Use link time optimization" TRUE)
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION USE_LTO)

@@ -6,8 +6,8 @@
 #include <filesystem>
 #include <unordered_map>
 
-enum class VCS { Git, Pijul, GitShell };
-enum class Action { Pull, Rebase, Unkown };
+enum class [[nodiscard]] VCS { Git, Pijul, GitShell };
+enum class [[nodiscard]] Action { Pull, Rebase, Unkown };
 
 static std::unordered_map<std::string, Action> const
 STRACTION =
@@ -39,7 +39,7 @@ std::ostream& operator
   return os;
 }
 
-class RepoArgs {
+class [[nodiscard]] RepoArgs {
   std::string target;
   std::string upstream;
   std::string branch;
@@ -59,12 +59,12 @@ class RepoArgs {
   friend class Repository;
 };
 
-class Repository {
+class [[nodiscard]] Repository {
   RepoArgs args;
   std::string hash;
   bool hash_updated;
 
-  bool
+  [[nodiscard]] bool
   navigate() const {
     if (std::filesystem::exists(args.target)) {
       std::filesystem::current_path(args.target);
@@ -104,19 +104,19 @@ class Repository {
 
   virtual ~Repository() {};
 
-  const std::string_view
+  [[nodiscard]] const std::string_view
   target() const          { return args.target;   }
 
-  const std::string&
+  [[nodiscard]] const std::string&
   upstream() const        { return args.upstream; }
 
-  const std::string&
+  [[nodiscard]] const std::string&
   branch() const          { return args.branch;   }
 
-  const std::string&
+  [[nodiscard]] const std::string&
   repo_hash() const       { return hash;          }
 
-  const bool&
+  [[nodiscard]] const bool&
   is_hash_updated() const { return hash_updated;  }
 
   void
@@ -132,7 +132,7 @@ class Repository {
   process(const std::shared_ptr<GlobalOptions>& opts) {
     if (navigate()) {
       switch (args.action) {
-        case Action::Pull: {
+        [[likely]] case Action::Pull: {
           pull(opts);
           break;
         }
@@ -140,7 +140,7 @@ class Repository {
           rebase(opts);
           break;
         }
-        case Action::Unkown: {
+        [[unlikely]] case Action::Unkown: {
           std::cout << "unknown task for " << this << std::endl;
           return;
         }
@@ -151,7 +151,7 @@ class Repository {
     }
   }
 
-  const
+  [[nodiscard]] const
   std::string details() {
     std::stringstream details;
     details << args.target
@@ -174,7 +174,7 @@ class Repository {
 };
 
 template <VCS G>
-class Repo final : public Repository {
+class [[nodiscard]] Repo final : public Repository {
   virtual void
   pull (const std::shared_ptr<GlobalOptions>&);
 

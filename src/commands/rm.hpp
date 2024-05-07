@@ -17,7 +17,7 @@ struct rm_command {
     );
   }
 
-  void
+  [[noreturn]] void
   do_command(const lyra::group & g) {
     if (directory.empty() || directory == ".") {
       directory = std::filesystem::current_path().generic_string();
@@ -46,6 +46,6 @@ struct rm_command {
         std::cout << "repository " << directory << " not found" << std::endl;
       }
     }
-    exit(0);
+    exit(EXIT_SUCCESS);
   }
 };

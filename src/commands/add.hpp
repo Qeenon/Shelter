@@ -41,7 +41,7 @@ struct add_command {
     );
   }
 
-  void
+  [[noreturn]] void
   do_command(const lyra::group & g) {
     if (directory.empty() || directory == ".") {
       directory = std::filesystem::current_path().generic_string();
@@ -64,6 +64,6 @@ struct add_command {
         save_config(config, config_file);
       }
     }
-    exit(0);
+    exit(EXIT_SUCCESS);
   }
 };

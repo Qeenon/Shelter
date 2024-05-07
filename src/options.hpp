@@ -3,7 +3,7 @@
 #include "yaml-cpp/yaml.h"
 #include "yaml-cpp/node/node.h"
 
-class GlobalOptions final {
+class [[nodiscard]] GlobalOptions final {
   bool clean;
   bool verbose;
   public:
@@ -17,12 +17,12 @@ class GlobalOptions final {
     : clean(c)
     , verbose(v) {};
 
-  bool
+  [[nodiscard]] bool
   do_clean() const {
     return clean;
   }
 
-  bool
+  [[nodiscard]] bool
   is_verbose() const {
     return verbose;
   }

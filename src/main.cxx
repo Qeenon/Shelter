@@ -64,21 +64,21 @@ main(int argc, char *argv[]) {
 
   show_version(version);
   if (version) {
-    return 0;
+    return EXIT_SUCCESS;
   }
 
   if (help) {
     std::cout << "\n" << cli << std::endl;
-    return 0;
+    return EXIT_SUCCESS;
   }
 
-  const auto& HomeDirectory = utils::get_home_dir();
+  const auto& HomeDirectory = utils::get_home_dir() + std::string("/");
 
-  const auto options_file = HomeDirectory + std::string("/") + OPTIONS_FILE;
-  const auto config_file = HomeDirectory + std::string("/") + CONFIG_FILE;
+  const auto options_file = HomeDirectory + OPTIONS_FILE;
+  const auto config_file  = HomeDirectory + CONFIG_FILE;
 
   std::shared_ptr<GlobalOptions> otpions = std::make_shared<GlobalOptions>();
-  
+
   if (std::filesystem::exists(options_file)) {
     otpions->parse_options(options_file);
   }
@@ -118,5 +118,5 @@ main(int argc, char *argv[]) {
               << std::endl;
   }
 
-  return 0;
+  return EXIT_SUCCESS;
 }

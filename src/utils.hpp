@@ -4,7 +4,7 @@
 
 namespace utils {
 
-const char*
+[[nodiscard]] const char*
 get_home_dir() {
   #ifdef unix
   #pragma GCC diagnostic push
