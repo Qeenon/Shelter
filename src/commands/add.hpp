@@ -1,11 +1,13 @@
 #pragma once
 
+#include "vcs/gitshell.hpp"
+
 struct add_command {
   bool show_help = false;
-  std::string directory; // current directory?
+  std::string branch    {}; // look for default branch
+  std::string upstream  {}; // "origin master"
+  std::string directory {}; // current directory?
   std::string action    = "pull";
-  std::string branch    = "master";
-  std::string upstream  = "origin master";
   std::string vcs       = "git";
 
   add_command(lyra::cli & cli) {
@@ -46,6 +48,13 @@ struct add_command {
     if (directory.empty() || directory == ".") {
       directory = std::filesystem::current_path().generic_string();
     }
+    if (branch.empty()) {
+      branch = gitshell::get_branch();
+    }
+    if (upstream.empty()) {
+      upstream = "origin " + branch;
+    }
+
     if (show_help) {
       std::cout << g;
     } else {

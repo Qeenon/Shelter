@@ -6,12 +6,6 @@
 
 namespace {
   const std::string
-  shell_get_branch() {
-    std::string rev_parse = exec("git rev-parse --abbrev-ref HEAD");
-    rev_parse.erase(std::remove(rev_parse.begin(), rev_parse.end(), '\n'), rev_parse.end());
-    return rev_parse;
-  }
-  const std::string
   shell_get_local_hash() {
     std::string log_hash = exec("git log -n 1 --pretty=format:%H");
     log_hash.erase(std::remove(log_hash.begin(), log_hash.end(), '\n'), log_hash.end());
@@ -38,12 +32,21 @@ namespace {
   }
 }
 
+namespace gitshell {
+  const std::string
+  get_branch() {
+    std::string rev_parse = exec("git rev-parse --abbrev-ref HEAD");
+    rev_parse.erase(std::remove(rev_parse.begin(), rev_parse.end(), '\n'), rev_parse.end());
+    return rev_parse;
+  }
+}
+
 template <> void
 Repo <VCS::GitShell> :: pull (
   const std::shared_ptr<GlobalOptions>& opts
 ) {
   const auto& repo_branch = branch();
-  if (shell_get_branch() != repo_branch) {
+  if (gitshell::get_branch() != repo_branch) {
     const auto checkout_cmd = "git checkout " + repo_branch;
     const auto output = exec(checkout_cmd.c_str());
     if (opts->is_verbose()) {
@@ -83,7 +86,7 @@ Repo <VCS::GitShell> :: rebase (
   const std::shared_ptr<GlobalOptions>& opts
 ) {
   const auto& repo_branch = branch();
-  if (shell_get_branch() != repo_branch) {
+  if (gitshell::get_branch() != repo_branch) {
     const auto checkout_cmd = "git checkout " + repo_branch;
     const auto output = exec(checkout_cmd.c_str());
     if (opts->is_verbose()) {
