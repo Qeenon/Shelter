@@ -9,7 +9,7 @@
 
 #include "lyra/lyra.hpp"
 
-#include "commands/show.hpp"
+#include "commands/list.hpp"
 #include "commands/add.hpp"
 #include "commands/rm.hpp"
 
@@ -52,7 +52,7 @@ main(int argc, char *argv[]) {
       ("Display version")
     ;
 
-  show_command _show { cli };
+  list_command _list { cli };
   add_command _add { cli };
   rm_command _rm { cli };
 

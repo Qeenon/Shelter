@@ -3,7 +3,7 @@
 #include "vcs/gitshell.hpp"
 
 struct add_command {
-  bool show_help = false;
+  bool show_help        = false;
   std::string branch    {}; // look for default branch
   std::string upstream  {}; // "origin master"
   std::string directory {}; // current directory?

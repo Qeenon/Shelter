@@ -2,14 +2,14 @@
 
 #include <tuple>
 
-struct show_command {
+struct list_command {
   bool show_help = false;
   std::string directory;
 
-  show_command(lyra::cli & cli) {
+  list_command(lyra::cli & cli) {
     cli.add_argument(
       lyra::command(
-        "show", [this](const lyra::group & g) { this->do_command(g); })
+        "list", [this](const lyra::group & g) { this->do_command(g); })
         .help("Show repositories.")
         .add_argument(lyra::help(show_help))
         .add_argument(
