@@ -134,6 +134,10 @@ Repo <VCS::Git> :: pull (
 
   const auto& repo_branch = branch();
   if (branch_name != repo_branch) {
+    if (!opts->do_force()) {
+      std::cout << "Not on " << repo_branch << ", skipping update!" << std::endl;
+      return;
+    }
     error = git_reference_dwim(&head_ref, repo, repo_branch.c_str());
     if (error < 0) {
       std::cout << "git_reference_dwim error: "

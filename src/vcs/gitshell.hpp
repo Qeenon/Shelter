@@ -46,7 +46,12 @@ Repo <VCS::GitShell> :: pull (
   const std::shared_ptr<GlobalOptions>& opts
 ) {
   const auto& repo_branch = branch();
+
   if (gitshell::get_branch() != repo_branch) {
+    if (!opts->do_force()) {
+      std::cout << "Not on " << repo_branch << ", skipping update!" << std::endl;
+      return;
+    }
     const auto checkout_cmd = "git checkout " + repo_branch;
     const auto output = exec(checkout_cmd.c_str());
     if (opts->is_verbose()) {
