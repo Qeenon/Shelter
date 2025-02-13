@@ -19,7 +19,6 @@ static std::unordered_map<std::string, std::string> const
 MIGMA =
   { { ".migma.py",    "python" }
   , { ".migma.sh",    "bash" }
-  , { ".migma.raku",  "raku" }
   , { ".migma.pl",    "perl" }
   };
 

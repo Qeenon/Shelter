@@ -14,7 +14,7 @@ if (MSVC)
   add_compile_options(/W4 /DNDEBUG)
 else()
   find_library(GIT2_LIBRARY NAMES git2)
-  add_compile_options(-Wall -Wextra -pedantic -Werror)
+  add_compile_options(-O3 -Wall -Wextra -pedantic -Werror)
 endif()
 
 # this needs for clang-tidy to get include paths etc
